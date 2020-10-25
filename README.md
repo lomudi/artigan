@@ -98,7 +98,7 @@ Unlike other GAN implementations, instead of attempting to train all layers of t
 
 At first, we have tried to run the model training for higher resolution of 512x512 (8 running blocks) on a server GPU, getting into a server timeouts. Running it locally enables to avoid the server timeouts, but we had to stop the running session at some point.
 
-When we are comparing the results of the two training sessions we have run, we can see the importance of a big and rich dataset. Although we didn't get to high-resolution images in our training sessions, we can see the training results of the "full dataset" include much "richer" images than the "Pablo Picasso dataset" training.
+When we are comparing the results of the two training sessions we have run, and arrived to an image output, we can see the importance of a big and rich dataset. Although we didn't get to high-resolution images in our training sessions, we can see the training results of the "full dataset" include much "richer" images than the "Pablo Picasso dataset" training.
 
 ## Run it locally
 
