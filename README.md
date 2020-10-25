@@ -6,11 +6,11 @@ artiGAN is a ProGAN implementation that is trained for generating art. The Progr
 
 ## Dataset
 
-We chose to use the [Best Artworks of All Time](https://www.kaggle.com/ikarus777/best-artworks-of-all-time) dataset from Kaggle. [Here](https://github.com/lomudi/artigan/blob/main/load_dataset_from_kaggle.ipynb) you can find a short notebook for downloading the dataset to your local machine (you will need to save your Kaggle secret JSON under the `kaggle_env` folder).
+We chose to use the [Best Artworks of All Time](https://www.kaggle.com/ikarus777/best-artworks-of-all-time) dataset from Kaggle. [Here](https://github.com/lomudi/artigan/blob/main/load_dataset_from_kaggle.ipynb) you can find a short notebook for downloading the dataset to your local machine (you will need to save your Kaggle secret JSON under a `kaggle_env` folder).
 
 ## Implementation
 
-**Full implementation notebook can be found [here](https://github.com/lomudi/artigan/blob/main/ArtiGAN.ipynb).**
+**[Full implementation notebook can be found here](https://github.com/lomudi/artigan/blob/main/ArtiGAN.ipynb).**
 
 In our ProGAN implementation we develop each phase of growth as a separate Keras model and each model will share the same layers and weights.
 
@@ -28,14 +28,14 @@ The discriminator model is defined as a deep convolutional neural network that e
 
 It includes the following layers:
 
-1. The first hidden layer is a 1×1 convolutional layer.
-2. The output block involves a MinibatchStdev, 3×3, and 4×4 convolutional layers, and a fully connected layer that outputs a prediction.
-3. Leaky ReLU activation functions are used after all layers and the output layers use a linear activation function.
-4. Then, it is trained for normal interval and then the model undergoes a growth phase to 8×8. This involves adding a block of two 3×3 convolutional layers and an average pooling downsample layer.
-5. The input image passes through the new block with a new 1×1 convolutional hidden layer. 
-6. The input image is also passed through a downsample layer and through the old 1×1 convolutional hidden layer. 
-7. The output of the old 1×1 convolution layer and the new block are then combined via a WeightedSum layer.
-8. After an interval of training transitioning the WeightedSum’s alpha parameter from 0.0 (all old) to 1.0 (all new), another training phase is run to tune the new model with the old layer and pathway removed.
+* The first hidden layer is a 1×1 convolutional layer.
+* The output block involves a MinibatchStdev, 3×3, and 4×4 convolutional layers, and a fully connected layer that outputs a prediction.
+* Leaky ReLU activation functions are used after all layers and the output layers use a linear activation function.
+* Then, it is trained for normal interval and then the model undergoes a growth phase to 8×8. This involves adding a block of two 3×3 convolutional layers and an average pooling downsample layer.
+* The input image passes through the new block with a new 1×1 convolutional hidden layer. 
+* The input image is also passed through a downsample layer and through the old 1×1 convolutional hidden layer. 
+* The output of the old 1×1 convolution layer and the new block are then combined via a WeightedSum layer.
+* After an interval of training transitioning the WeightedSum’s alpha parameter from 0.0 (all old) to 1.0 (all new), another training phase is run to tune the new model with the old layer and pathway removed.
 
 This process repeats until the desired image size is met.
 
@@ -51,10 +51,10 @@ It includes a base model for generating 4×4 images and growth versions of the m
 
 The growth phase is the main different between the discriminator and the generator models.
 
-1. In the generator model the output of the model is the output of the WeightedSum layer.
-2. The growth phase version of the model involves first adding a nearest neighbor upsampling layer.
-3. This is then connected to the new block with the new output layer and to the old old output layer.
-4. The old and new output layers are then combined via a WeightedSum output layer.
+* In the generator model the output of the model is the output of the WeightedSum layer.
+* The growth phase version of the model involves first adding a nearest neighbor upsampling layer.
+* This is then connected to the new block with the new output layer and to the old old output layer.
+* The old and new output layers are then combined via a WeightedSum output layer.
 
 The base model has an input block defined with a fully connected layer with a similar number of activations to create a given number of 4×4 feature maps.
 
@@ -82,11 +82,11 @@ The `train_epochs()` function implements the training of the discriminator and g
 
 We have been running 2 training sessions of the model:
 
-1. Training by a dataset of 439 images of Pablo Picasso. We have run the training with 3 running blocks and created a model with an image resolution of 16x16. Training time was 0.5 an hour. The full training stages results can found [here](https://github.com/lomudi/artigan/blob/main/Pablo_Picasso_Results).
+* Training by a dataset of 439 images of Pablo Picasso. We have run the training with 3 running blocks and created a model with an image resolution of 16x16. Training time was 0.5 an hour. The full training stages results can found [here](https://github.com/lomudi/artigan/blob/main/Pablo_Picasso_Results).
 
 ![Pablo_Picasso_Results](Pablo_Picasso_Results/artigan.gif)
 
-2. Training by a dataset of 8027 images of different artists. We have run it with 3 running blocks and created a model with an image resolution of 16x16. Training time was 9.5 hours. The full training stages results can found [here](https://github.com/lomudi/artigan/blob/main/full-dataset-results).
+* Training by a dataset of 8027 images of different artists. We have run it with 3 running blocks and created a model with an image resolution of 16x16. Training time was 9.5 hours. The full training stages results can found [here](https://github.com/lomudi/artigan/blob/main/full-dataset-results).
 
 ![full-dataset-training](full-dataset-results/artigan.gif)
 
@@ -100,19 +100,21 @@ When we are comparing the results of the two training sessions we have run, we c
 
 ## Run it locally
 
-### Make sure to install
+First clone the project.
 
-1. anaconda3 with python 3.7
-2. jupyter lab / notebook: `conda install -c conda-forge jupyterlab`
+**Make sure to install**
 
-### Create ENV for the first time
+* anaconda3 with python 3.7
+* jupyter lab / notebook: `conda install -c conda-forge jupyterlab`
 
-1. run: `conda install -n artigan`
-2. run: `source activate artigan`
-3. run: `pip install -r env.txt`
-4. open jupyter lab by: `jupyter lab`
+**Create ENV for the first time**
 
-### Running after creating ENV for the first time
+* run: `conda install -n artigan`
+* run: `source activate artigan`
+* run: `pip install -r env.txt`
+* open jupyter lab by: `jupyter lab`
 
-1. run: `source activate artigan`
-2. open jupyter lab by: `jupyter lab`
+**Running after creating ENV for the first time**
+
+* run: `source activate artigan`
+* open jupyter lab by: `jupyter lab`
