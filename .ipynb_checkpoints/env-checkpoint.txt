@@ -1,0 +1,10 @@
+imageio
+numpy
+tensorflow
+datetime
+IPython
+matplotlib
+scikit-image
+keras
+pydot
+kaggle
