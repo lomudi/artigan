@@ -96,6 +96,8 @@ This ProGAN implementation can be also trained to a higher resolution, we estima
 
 Unlike other GAN implementations, instead of attempting to train all layers of the generator and discriminator at once, with ProGAN, we are gradually growing our GAN, one layer at a time, to handle progressively higher resolution versions of the images. Such implementations have a price in the need for more compute resources/training time, as we could saw in our training sessions. More than that, when we are getting to a higher resolution block, the training time will have exponential growth.
 
+At first, we have tried to run the model training for higher resolution of 512x512 (8 running blocks) on a server GPU, getting into a server timeouts. Running it locally enables to avoid the server timeouts, but we had to stop the running session at some point.
+
 When we are comparing the results of the two training sessions we have run, we can see the importance of a big and rich dataset. Although we didn't get to high-resolution images in our training sessions, we can see the training results of the "full dataset" include much "richer" images than the "Pablo Picasso dataset" training.
 
 ## Run it locally
